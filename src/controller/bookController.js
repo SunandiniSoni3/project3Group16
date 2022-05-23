@@ -3,6 +3,8 @@ const bookModel = require('../model/bookModel')
 const reviewModel = require("../model/reviewsModel")
 const mongoose = require("mongoose")
 const moment = require("moment")
+const aws= require("aws-sdk")
+const multer=require("multer")
 
 
 
@@ -25,7 +27,22 @@ const isValidObjectId = (value) => {
   return mongoose.isValidObjectId(value)
 }
 
+//aws connection
+// aws.config.update({
+//   accessKeyId: "AKIAY3L35MCRVFM24Q7U",
+//   secretAccessKeyId: "qGG1HE0qRixcW1T1Wg1bv+08tQrIkFVyDFqSft4J",
+//   region: "ap-south-1"
+// })
+
+
+
+
+
+
+
+
 //-------------------------------------------------------POST /books---------------------------------------------------------//
+
 
 const createBook = async (req, res) => {
 
@@ -54,10 +71,10 @@ const createBook = async (req, res) => {
       return res.status(404).send({ status: false, message: "user not defined " })
     }
 
-    let tokenUserId = req["userId"]
-    if (tokenUserId != userId) {
-      return res.status(401).send({ status: false, message: "you are unauthorized to access this data " })
-    }
+    // let tokenUserId = req["userId"]
+    // if (tokenUserId != userId) {
+    //   return res.status(401).send({ status: false, message: "you are unauthorized to access this data " })
+    // }
 
     //   title validation
     //validaton check for the type of Value --
@@ -116,6 +133,20 @@ const createBook = async (req, res) => {
       return res.status(400).send({ status: false, message: " plz enter valid date" })
 
     }
+
+    //
+
+    // let files= req.files
+    // if(files && files.length>0){
+       
+    //     let uploadedFileURL= await uploadFile( files[0] )
+    //     // return res.status(201).send({msg: "file uploaded succesfully", data: uploadedFileURL})
+    //     data["bookCover"]=uploadedFileURL
+    // }
+    // else{
+    //     res.status(400).send({ msg: "No file found" })
+    // }
+
 
     //data creation--
     const saveBook = await bookModel.create(data)
